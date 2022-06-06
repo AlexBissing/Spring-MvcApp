@@ -14,7 +14,7 @@ import java.util.List;
 public class HibernateUserDAO implements UserDAO {
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     private Session currentSession() {
         return sessionFactory.openSession();

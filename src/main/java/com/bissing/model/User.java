@@ -2,6 +2,9 @@ package com.bissing.model;
 
 import javax.persistence.*;
 
+import org.springframework.data.annotation.Id;
+
+
 @Entity
 @Table(name="users")
 public class User {
@@ -9,6 +12,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String surname;
     private String email;
@@ -16,8 +20,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id,String name, String surname, String email) {
-        this.id = id;
+    public User(String name, String surname, String email) {
         this.name = name;
         this.surname = surname;
         this.email = email;

@@ -1,8 +1,8 @@
-package com.bissing;
+package com.bissing.controller;
 
 import com.bissing.dao.UserDAO;
-import com.bissing.dao.impl.JdbcTemplateUserDAO;
 import com.bissing.model.User;
+import com.bissing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class  MainController {
 
     @Autowired
-    @Qualifier("jdbcApiUserDAO")
-    private UserDAO userDAO;
+    private UserService  userService;
 
 
     @GetMapping("/view/{name}")
@@ -32,7 +31,7 @@ public class  MainController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        model.addAttribute("users", userDAO.getAll());
+        model.addAttribute("users", userService.getAll());
         return "/users";
     }
 
@@ -44,7 +43,7 @@ public class  MainController {
 
     @PostMapping("/users/new")
     public String signUp(@ModelAttribute User user) {
-        userDAO.add(user);
+        userService.add(user);
         return "redirect:/users";
     }
 }
