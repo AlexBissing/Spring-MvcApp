@@ -1,23 +1,22 @@
 package com.bissing;
 
 import com.bissing.dao.UserDAO;
+import com.bissing.dao.impl.JdbcTemplateUserDAO;
 import com.bissing.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
-public class MainController {
+public class  MainController {
 
     @Autowired
+    @Qualifier("jdbcApiUserDAO")
     private UserDAO userDAO;
 
-    List<User> users = new ArrayList<>();
 
     @GetMapping("/view/{name}")
     public String view(@PathVariable("name") String name,  Model model) {
@@ -32,7 +31,7 @@ public class MainController {
     }
 
     @GetMapping("/users")
-    public String getUsers(Model model) throws SQLException {
+    public String getUsers(Model model) {
         model.addAttribute("users", userDAO.getAll());
         return "/users";
     }
@@ -45,7 +44,7 @@ public class MainController {
 
     @PostMapping("/users/new")
     public String signUp(@ModelAttribute User user) {
-//        users.add(user);
+        userDAO.add(user);
         return "redirect:/users";
     }
 }
